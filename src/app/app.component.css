@@ -1,0 +1,415 @@
+@font-face {
+    font-family: heebo;
+    src: url(src\assets\fonts\static\Heebo-Regular.ttf) format('truetype');
+    font-family: heebo-bold;
+    src: url(src\assets\fonts\static\Heebo-Bold.ttf) format('truetype');
+    font-family: heebo-extra-bold;
+    src: url(src\assets\fonts\static\Heebo-ExtraBold.ttf) format('truetype');
+}
+
+:root {
+    margin: 0;  
+    --color-tech-blue: #2776EA; 
+    --cornflower-blue: #6699ff;
+    --color-light-blue: #78CDD1;
+    --color-black: #0A0909;
+    --color-white: #FFFFFF;
+  }
+
+
+.section__padding {
+    padding: 4rem 6rem;
+  }
+  
+.flex__center {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+.heebo_title {
+  font-family: heebo-extra-bold;
+  color: #ffffff;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-feature-settings: 'tnum' on, 'lnum' on;
+  font-size: 20px;
+  }
+  
+.heebo {
+    font-family: heebo;
+    color: #ffffff;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 28px;
+    font-size: 16px;
+  
+  }
+  
+  .heebo-heading {
+    font-family: heebo-extra-bold;
+    color: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    font-size: 35px;
+  }
+
+  .heebo li {
+    text-decoration: none;
+    box-shadow: none;
+  }
+  
+.container {
+    width:100%;
+    max-width: 100vw;
+    height: 700px;
+    margin:auto;
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    /*background-image: url("src\assets\images\blue-background.jpg");
+    background-repeat: no-repeat;*/
+
+ }
+
+.grid_title {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+}
+
+.container-navbar {
+  height:60px;
+  width: 100%;
+  background-color: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+  background-color: #6699ff;
+}
+
+.nav-item:first-child{
+  margin-right: 200px;
+}
+
+.search {
+  border:solid;
+  background-color: #78CDD1;
+  border-color: #0A0909;
+  border-width: 1px;
+  margin-top: 1px;
+  margin-left: 10px;
+}
+
+.navbar h2 {
+  color:#0A0909;
+}
+
+.nav-list {
+  margin: auto;
+}
+
+.navbar a {
+  text-decoration: none;
+  font-family: heebo-extra-bold;
+  font-weight: 700;
+  font-size: 19px;
+  color:#0A0909;
+
+}
+
+.navbar input {
+  text-decoration: none;
+  font-family: heebo-extra-bold;
+  font-weight: 700;
+  font-size: 20px;
+  color:#0A0909;
+
+}
+
+.navbar button {
+  text-decoration: none;
+  font-family: heebo-extra-bold;
+  font-weight: 700;
+  font-size: 20px;
+  color:#0A0909;
+
+}
+
+.navbar ul li {
+  float: left;
+  list-style: none;
+  position: relative;
+}
+
+.navbar ul li a {
+  display: block;
+  padding: 5px 24px;
+}
+
+.navbar ul li input {
+  display: block;
+  padding: 5px 24px;
+}
+.navbar ul li button {
+  display: block;
+  padding: 5px 24px;
+}
+
+.navbar ul li ul {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 0px 0px 4px 4px;
+  z-index: 1;
+
+}
+
+.navbar ul li:hover ul{
+  display: block;
+}
+
+
+
+.navbar ul li ul li {
+  width: 180px;
+  border-radius: 4px;
+}
+
+
+.navbar ul li ul li a:hover{
+  background-color: #78CDD1;
+  
+}
+
+.button-login{
+  margin-right: 10px;
+  background: none;
+  border: none;
+  
+}
+
+.background {
+    background-image: url("src/assets/images/black-wallpaper.jpg");
+    background-attachment: fixed;
+}
+  
+.blue-text {
+  color:#2776EA;
+}
+
+.item-1 {
+  margin: 2rem;
+  text-align: center;
+}
+
+.game_wrapper{
+  height: 525px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 1.5rem;
+  overflow: hidden;
+  border: solid;
+  border-color: #6699ff;
+  border-width: 5px;
+}
+
+
+.game_items {
+  position:relative;
+  width: 260px;
+  height: 350px;
+  cursor: pointer;
+  border:solid;
+  border-color: #ffffff;
+  border-width: .5px;
+}
+
+.game_items:hover {
+  width: 312px;
+  height: 420px;
+  transition: .5s ease;
+}
+
+.game_overlay {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.25s;
+
+
+}
+
+.game_overlay:hover {
+  opacity: 1;
+}
+
+.game_text {
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.game_buy {
+  margin-top: 50px;
+  font-size: 30px;
+  color: #ffffff;
+  background-color: #78CDD1;
+  text-align: center;
+}
+
+.game_image {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  opacity: 1;
+  transition: .5s ease;
+
+}
+
+.name_heading {
+  position: relative;
+  top: 105%;
+  text-align: center; 
+  color: #FFFFFF;  
+}
+
+.list_arrow-prev{
+  position: absolute;
+  left: 45px;
+  top: 54%;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.list_arrow-next{
+  position: absolute;
+  right: 45px;
+  top: 54%;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.list_arrow-prev:hover{
+  border: solid;
+  border-color: #FFFFFF;
+  border-width: 1px;
+  border-radius: 100%;
+}
+
+.list_arrow-next:hover{
+  border: solid;
+  border-color: #FFFFFF;
+  border-width: 1px;
+  border-radius: 100%;
+}
+/*.grid_title{
+  overflow: hidden;
+}
+.game_list {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  max-width: 50%;
+  position: relative;
+}
+
+.game_wrapper {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.game_wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+
+.grid_banner-top {
+  display: block;
+  color:#0A0909;
+  width:100%;
+  height: 20px;
+}
+
+.name_heading {
+}
+
+
+.info{
+    width: 262.5px;
+    height: 375px;
+    position: relative;
+    border: solid;
+    border-color: black;
+    border-width: 3px;
+    overflow:hidden;
+    
+}
+.game_image {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: .5s ease;
+ 
+}
+
+.game_overlay {
+    position: relative;
+    margin-right: 2rem;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.25s;
+    
+}
+
+.game_overlay > *{
+    transform: translateY(20px);
+    transition: transform 0.25s;;
+}
+
+.game_text {
+    color: var(--color-white);
+    visibility: visible;
+}
+
+.game_overlay:hover{
+    opacity: 1;
+}
+
+.game_overlay:hover > * {
+    transform: translateY(0);
+}*/

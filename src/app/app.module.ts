@@ -1,16 +1,43 @@
+import { appRoutingModule } from './app.routing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { GamesService } from './games.service';
+import { UsersService } from './users.service';
+import { RegistrationService } from './registration.service';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 import { AppComponent } from './app.component';
+import { PrevArrowDirective } from './prev-arrow.directive';
+import { NextArrowDirective } from './next-arrow.directive';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PrevArrowDirective,
+    NextArrowDirective,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    Ng2SearchPipeModule,
+    appRoutingModule
+
   ],
-  providers: [],
+  providers: [
+    GamesService,
+    UsersService,
+    RegistrationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
