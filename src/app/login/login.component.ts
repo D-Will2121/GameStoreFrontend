@@ -21,22 +21,5 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  doLogin(){
-   let response = this.regService.login(this.username,this.password);
-   response.subscribe(data=>{
-     console.log(data)
-   })
-  }
-
-  onLoginUser(loginForm: NgForm){
-    this.regService.login(loginForm.controls['email'].value, loginForm.controls['password'].value).subscribe(
-      (response: User) => {
-        this.router.navigate(["/home"])
-      },
-      (error: HttpErrorResponse) => {
-      alert(error.message);
-      }
-    );
-   }
-
+ 
 }

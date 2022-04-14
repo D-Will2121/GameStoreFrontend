@@ -1,0 +1,34 @@
+<p>horror works!</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<div class = "container" class = "grid_search">
+  <div class = "searchbar">
+    <input class = "bar" name = "searchbar" type="text" [(ngModel)] = "searchKey" (ngModelChange)="searchGames()" placeholder = "Search by name...">
+    <button class = "search" type="submit">Search</button>
+  </div>
+</div>
+<div class = "container" class = "grid_title" id ="horror">
+    <h2 class="item-1">Genre: Horror Games</h2>
+    <div class="game_wrapper">
+      <img class = list_arrow-prev appPrevArrow src ="/assets/images/arrow-left.png">
+      <tbody class ="tbody" *ngFor="let game of horrorGames">
+        <div class="game_items">
+              <img class="game_image" src={{game?.image}} alt="">
+              <div class = "name_heading">
+                <h5 class = "heebo_title"><a>{{game?.name}}</a></h5>
+              </div>
+              <div class="game_overlay">
+                <ul class="heebo_title">
+                    <p class = "game_text"><b>Year: {{" " + game?.year}}</b></p>
+                    <p class = "game_text"><b>Rating: {{" " + game?.rating}}</b></p>
+                    <p class = "game_text"><b>Price: {{" $" + game?.price}}</b></p>
+                    <button class = "game_buy"><b>Buy Now</b></button>
+                </ul>
+              </div>
+            </div>    
+      </tbody>
+      <img class = list_arrow-next appNextArrow src ="/assets/images/arrow-right.png">
+    </div>
+</div>
+<div class = "container"></div>
+ 

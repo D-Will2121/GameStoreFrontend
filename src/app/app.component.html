@@ -16,12 +16,15 @@
           <li class = "nav-item">
             <button class = "button-login" id = "register-button" (click)="openRegisterUser(newUser)" href="register">Register</button> 
           </li>
-          <li class = "searchbar">
+          <!-- <li class = "searchbar">
             <input class = "bar" name = "searchbar" type="text" [(ngModel)] = "searchKey" (ngModelChange)="searchGames()" placeholder = "Search by name or year...">
-          </li>
+          </li> 
           <li class = "search">
             <a type="submit">Search</a>
-          </li>
+          </li> -->
+          <!-- <li class = "nav-item">
+            <p class = "heebo-title" id = "user-cash">Funds:{{ " " + currentUser?.cash}}</p> 
+          </li> -->
         </ul>
         
       </nav>
@@ -29,68 +32,7 @@
     </div>
   </div>
   <router-outlet></router-outlet>
-  <div class = "container" class = "grid_title">
-    <h2 class="item-1">Genre: Action-Adventure</h2>
-    <div class="game_wrapper">
-      <img class = list_arrow-prev appPrevArrow src ="/assets/images/arrow-left.png">
-      <tbody class ="tbody" *ngFor="let game of actionGames">
-        <div class="game_items">
-              <img class="game_image" src={{game?.image}} alt="">
-              <div class = "name_heading">
-                <h5 class = "heebo_title"><a>{{game?.name}}</a></h5>
-              </div>
-              <div class="game_overlay">
-                <ul class="heebo_title">
-                    <p class = "game_text"><b>Year: {{" " + game?.year}}</b></p>
-                    <p class = "game_text"><b>Rating: {{" " + game?.rating}}</b></p>
-                    <p class = "game_text"><b>Price: {{" $" + game?.price}}</b></p>
-                    <button class = "game_buy"><b>Buy Now</b></button>
-                </ul>
-              </div>
-            </div>    
-      </tbody>
-      <img class = list_arrow-next appNextArrow src ="/assets/images/arrow-right.png">
-    </div>
-  </div>
-  <div class = "container">
-    <div class="game_grid" >
-      <tbody *ngFor="let game of lifeGames">
-            <td class="info">
-              <li><img class="game_image" src={{game?.image}} alt=""></li>
-              <div class="game_overlay">
-                <ul class="game_text">
-                    <p class = "heebo_title"><b>Genre: {{game?.genre}}</b></p>
-                    <p class = "heebo_title"><b>Year: {{" " + game?.year}}</b></p>
-                    <p class = "heebo_title"><b>Rating: {{" " + game?.rating}}</b></p>
-                    <p class = "heebo_title"><b>Price: {{" $" + game?.price}}</b></p>
-                </ul>
-              </div>
-            </td>
-            <div class = "name_heading">
-              <h5 class = "heebo_title" class = "blue-text"><a>{{game?.name}}</a></h5>
-            </div>
-    </div>
-  </div>
-  <div class = "container">
-    <div class="game_grid" >
-      <tbody *ngFor="let game of strategyGames">
-            <td class="info">
-              <li><img class="game_image" src={{game?.image}} alt=""></li>
-              <div class="game_overlay">
-                <ul class="game_text">
-                    <p class = "heebo_title"><b>Genre: {{game?.genre}}</b></p>
-                    <p class = "heebo_title"><b>Year: {{" " + game?.year}}</b></p>
-                    <p class = "heebo_title"><b>Rating: {{" " + game?.rating}}</b></p>
-                    <p class = "heebo_title"><b>Price: {{" $" + game?.price}}</b></p>
-                </ul>
-              </div>
-            </td>
-            <div class = "name_heading">
-              <h5 class = "heebo_title" class = "blue-text"><a>{{game?.name}}</a></h5>
-            </div>
-    </div>
-  </div>
-</div>
+  
 
 <ng-template #newUser let-modal>
   <div class="modal-header">

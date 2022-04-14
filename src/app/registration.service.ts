@@ -10,6 +10,11 @@ import { User } from './user';
 export class RegistrationService {
 
   private apiServerUrl = environment.apiBaseUrl;
+  headers = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+    })
+}
 
   constructor(private http: HttpClient ) {
 
@@ -21,12 +26,12 @@ export class RegistrationService {
   }
   return this.http.post<User>(`${this.apiServerUrl}/users/registration?role=${role}`, user, requestOptions); 
 }
-  public login(user: string, password:string): Observable<User>{
+  public login(user: User): Observable<User>{
     const requestOptions: Object = {
-      responseType: 'text',
-      Authorization: 'Basic '+btoa(user+":"+password)
+      responseType: 'json',
+      //Authorization: 'Basic '+btoa(user+":"+password)
     }
    
-    return this.http.get<User>(`${this.apiServerUrl}/`, requestOptions);
+    return this.http.post<any>(`${this.apiServerUrl}/login`, user);
   }
 }

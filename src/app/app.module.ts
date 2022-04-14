@@ -15,6 +15,10 @@ import { PrevArrowDirective } from './prev-arrow.directive';
 import { NextArrowDirective } from './next-arrow.directive';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { ContentComponent } from './content/content.component';
+import { HorrorComponent } from './horror/horror.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
+import { SliceoflifeComponent } from './sliceoflife/sliceoflife.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { HomeComponent } from './home/home.component';
     PrevArrowDirective,
     NextArrowDirective,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    ContentComponent,
+    HorrorComponent,
+    PuzzleComponent,
+    SliceoflifeComponent
   ],
   imports: [
     BrowserModule,
