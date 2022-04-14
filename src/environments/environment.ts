@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://videogame-store-app.herokuapp.com/'
+  apiBaseUrl: 'https://videogame-store-app.herokuapp.com'
 };
 
 /*
