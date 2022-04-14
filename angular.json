@@ -23,9 +23,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "_redirects",     
               "src/favicon.ico",
               "src/assets"
-            ],
+            ]
+            ,
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
