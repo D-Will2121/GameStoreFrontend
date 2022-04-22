@@ -121,7 +121,6 @@ export class AppComponent implements OnInit{
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
       }
     );
   }
