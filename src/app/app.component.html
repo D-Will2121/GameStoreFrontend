@@ -11,14 +11,14 @@
           <li class = "nav-item">
             <a class = "heebo-title" routerLink="/">Home</a>
           <li class = "nav-item">
-            <button class = "button-login" (click)="openLoginUser(loginUser)">Login</button>
+            <button *ngIf="!isLoggedIn" class = "button-login" (click)="openLoginUser(loginUser)">Login</button>
+            <button *ngIf="isLoggedIn" class = "button-login" (click)="logoutUser()">Logout</button>
           </li>
           <li class = "nav-item">
-            <button class = "button-login" id = "register-button" (click)="openRegisterUser(newUser)" href="register">Register</button> 
+            <button  class = "button-login" id = "register-button" (click)="openRegisterUser(newUser)" href="register">Register</button> 
           </li>
           <li class = "nav-item">
-            <p class = "heebo-title" id = "user-cash">Login and Purchasing under maintainance</p>
-            <!-- Funds:{{ " " + currentUser?.cash}}  -->
+            <p class = "heebo-title" id = "user-cash">Funds:{{ " " + funds}}
           </li>
         </ul>
         
@@ -64,14 +64,16 @@
     <h4 class="modal-title" id="modal-basic-title">Login User</h4>
   </div>
   <div class="modal-body">
-     <form #loginForm="ngForm" (ngSubmit)="onLoginUser(loginForm)">
-     <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
-     </div>
-     <div class="form-group">
-        <label for="password">password</label>
-        <input type="password" ngModel name="password" class="form-control" id="password" placeholder="Password" required>
+    <form #loginForm="ngForm" (ngSubmit)="onLoginUser()">
+      <div class="form-group">
+        <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
+        <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
+        <label for="username">Email:</label> <input type="text"
+          class="form-control" id="email" name="email" placeholder="Email" required [(ngModel)]="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label> <input type="password"
+          class="form-control" id="password" name="password"  placeholder="Password" required [(ngModel)]="password">
       </div>
      <div class="modal-footer">
         <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" (click)=" modal.dismiss(loginUser)">Close</button>
@@ -80,3 +82,6 @@
      </form>
   </div>
 </ng-template>
+
+
+

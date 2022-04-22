@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Game } from '../game';
 import { RegistrationService } from '../registration.service';
 import { User } from '../user';
@@ -23,6 +23,9 @@ export class HorrorComponent implements OnInit {
   searchKey: any;
   closeResult: string;
   searchStarted: boolean;
+  gameID: number;
+  isLoading: boolean;
+
  
 
   constructor(private gameService: GamesService, private userService: UsersService,
@@ -44,7 +47,6 @@ export class HorrorComponent implements OnInit {
         return response;
       },
       (error: HttpErrorResponse) => {
-      alert(error.message);
       }
     );
   }
@@ -54,12 +56,25 @@ export class HorrorComponent implements OnInit {
         this.horrorGames = response;
       },
       (error: HttpErrorResponse) => {
-      alert(error.message);
       }
     );
   }
 
-
+  public buyGames(id: number): void {
+    this.isLoading = true;
+    let email = this.regService.getLoggedInEmail();
+    this.userService.purchaseGame(email, id).subscribe(
+      async (response: User) => {
+      let user = response;
+      await this.regService.saveUserData(user?.email, user?.name, user?.cash, user?.userRole, user?.password)
+      this.getGamesGenre();
+      this.router.navigate(['/']);
+      window.location.reload();
+    },
+    (error: HttpErrorResponse) => {
+    }
+   );
+  }
   public searchGames(): void {
     if(this.searchKey == "")
     {
@@ -105,6 +120,24 @@ export class HorrorComponent implements OnInit {
       })
   }
 
+  openBuyGame(content: any, id: number){
+    this.gameID = id;
+    this.modalService.open(content, {ariaLabelledBy: 'buyGame'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.closeModal(content)}`;
+    });
+  }
+
+  private closeModal(reason: any) : string{
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
   
 
 }

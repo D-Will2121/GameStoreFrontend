@@ -299,6 +299,10 @@
   text-align: center;
 }
 
+.game_buy:hover{
+  border-color:#FFFFFF;
+}
+
 .game_image {
   position: absolute;
   top:0;

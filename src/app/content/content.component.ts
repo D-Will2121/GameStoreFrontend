@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Game } from '../game';
 import { RegistrationService } from '../registration.service';
 import { User } from '../user';
@@ -18,16 +18,11 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 export class ContentComponent implements OnInit {
   public games: Game[];
   public actionGames: Game[];
-  public lifeGames: Game[];
-  public horrorGames: Game[];
-  public strategyGames: Game[];
-  public newGame: Game;
-  public delGame: Game;
+  public gameID: number;
+  isLoading: boolean;
   searchKey: any;
   closeResult: string;
   searchStarted: boolean;
-  username:string;
-  password:string;
 
   constructor(private gameService: GamesService, private userService: UsersService,
     private regService: RegistrationService, private modalService: NgbModal,
@@ -48,7 +43,6 @@ export class ContentComponent implements OnInit {
         return response;
       },
       (error: HttpErrorResponse) => {
-      alert(error.message);
       }
     );
   }
@@ -58,60 +52,29 @@ export class ContentComponent implements OnInit {
         this.actionGames = response;
       },
       (error: HttpErrorResponse) => {
-      alert(error.message);
       }
     );
-    this.gameService.getGamesByGenre('horror').subscribe(
-      (response: Game[]) => {
-        this.horrorGames = response;
-      },
-      (error: HttpErrorResponse) => {
-      alert(error.message);
-      }
-    );
-    this.gameService.getGamesByGenre('strategy').subscribe(
-      (response: Game[]) => {
-        this.strategyGames = response;
-      },
-      (error: HttpErrorResponse) => {
-      alert(error.message);
-      }
-    );
-    this.gameService.getGamesByGenre('slice-of-life').subscribe(
-      (response: Game[]) => {
-        this.lifeGames = response;
-      },
-      (error: HttpErrorResponse) => {
-      alert(error.message);
-      }
-    );
+    
+  }
+
+  public buyGames(id: number): void {
+    this.isLoading = true;
+    let email = this.regService.getLoggedInEmail();
+    this.userService.purchaseGame(email, id).subscribe(
+      async (response: User) => {
+      let user = response;
+      await this.regService.saveUserData(user?.email, user?.name, user?.cash, user?.userRole, user?.password)
+      this.getGamesGenre();
+      this.router.navigate(['/']);
+      window.location.reload();
+    },
+    (error: HttpErrorResponse) => {
+    }
+   );
+
   }
 
  
-  // public getGamesByContent(content: any): void {
-  //   if (isNaN(content))
-  //   {
-  //     this.gameService.getGamesByName(content).subscribe(
-  //       (response: Game[]) => {
-  //         this.games = response;
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //       }
-  //     );  
-  //   }
-  //   else if(!isNaN(content))
-  //   {
-  //     this.gameService.getGamesByYear(content).subscribe(
-  //       (response: Game[]) => {
-  //         this.games = response;
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //       }
-  //     );
-  //   }  
-  // }
 
   public onAddgame(addForm: NgForm): void {
     document.getElementById('add-game-form')?.click();
@@ -162,15 +125,6 @@ export class ContentComponent implements OnInit {
         return gameService.name.toLocaleLowerCase().match(this.searchKey.toLocaleLowerCase());
         })
     }
-    // else{
-    //   var num = this.searchKey;
-    //   console.log(num);
-      
-    //   this.actionGames = this.actionGames.filter(gameService =>
-    //     {
-    //     return gameService.year == num;
-    //     })
-    // }
   }
 
   public searchGamesGenre(text: String): void {
@@ -201,6 +155,26 @@ export class ContentComponent implements OnInit {
       {
       return gameService.rating == num
       })
+  }
+
+
+  openBuyGame(content: any, id: number){
+    this.gameID = id;
+    this.modalService.open(content, {ariaLabelledBy: 'buyGame'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.closeModal(content)}`;
+    });
+  }
+
+  private closeModal(reason: any) : string{
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   

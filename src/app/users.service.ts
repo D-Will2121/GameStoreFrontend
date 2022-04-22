@@ -1,3 +1,4 @@
+import { RegistrationService } from './registration.service';
 import { User } from './user';
 import { Injectable } from '@angular/core';
 import {HttpClient } from '@angular/common/http';
@@ -5,18 +6,22 @@ import { Observable } from 'rxjs';
 import { Game } from './game';
 import { environment } from 'src/environments/environment';
 import { R3UsedDirectiveMetadata } from '@angular/compiler';
+import { EmailValidator } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
+
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient, private regService: RegistrationService ) { }
 
-  public purchaseGame(UserID: Number, GameID: Number): Observable<User> {
-    return this.http.get<User>(`${this.apiServerUrl}/users/buy/${UserID}/${GameID}`);
+  public purchaseGame(email: String, GameID: Number): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/users/buy/${email}/${GameID}`, { headers: { authorization: 
+      this.regService.createBasicAuthToken(this.regService.getLoggedInEmail(), this.regService.getLoggedInPassword()) }}
+      );
   }
 
   public addGame(game: Game): Observable<Game> {
@@ -28,34 +33,16 @@ export class UsersService {
   }
 
   public deleteGameID(gameId: Number): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/games/delete/${gameId}`);
+    return this.http.delete<void>(`${this.apiServerUrl}/users/admins/games/delete/id/${gameId}`, { headers: { authorization: 
+      this.regService.createBasicAuthToken(this.regService.getLoggedInEmail(), this.regService.getLoggedInPassword()) }}
+      );
   }
-
-  // public deleteGameName(name: String): Observable<void> {
-  //   return this.http.delete<void>(`${this.apiServerUrl}/games/delete/${name}`);
-  // }
-
-  // public deleteGameYear(year: Number): Observable<void> {
-  //   return this.http.delete<void>(`${this.apiServerUrl}/games/delete/${year}`);
-  // }
 
   public getGames(): Observable<Game[]> {
     return this.http.get<Game[]>(`${this.apiServerUrl}/users/all`);
   }
 
 
-
-  // public getGamesByYear(year: Number): Observable<Game[]> {
-  //   return this.http.get<Game[]>(`${this.apiServerUrl}/users/all/year/${year}`);
-  // }
-
-  // public getGamesByName(name: String): Observable<Game[]> {
-  //   return this.http.get<Game[]>(`${this.apiServerUrl}/users/all/name/${name}`);
-  // }
-
-  // public getGamesByGenre(genre: String): Observable<Game[]> {
-  //   return this.http.get<Game[]>(`${this.apiServerUrl}/users/all/name/${genre}`);
-  // }
 
 
   

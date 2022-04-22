@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://videogame-store-app.herokuapp.com'
+  apiBaseUrl: 'http://localhost:8080'
+
+  //apiBaseUrl: 'https://videogame-store-app.herokuapp.com'
 };
 
 /*

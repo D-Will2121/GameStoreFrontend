@@ -1,6 +1,6 @@
 import { GamesService } from './games.service';
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { EmptyError } from 'rxjs';
 import { UsersService } from './users.service';
@@ -8,7 +8,9 @@ import { RegistrationService } from './registration.service';
 import { ModalDismissReasons, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Game } from './game';
 import { User } from './user';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize, mergeMap } from 'rxjs/operators'
+
 
 
 @Component({
@@ -19,56 +21,90 @@ import { Router } from '@angular/router';
 
 export class AppComponent implements OnInit{
   
-  public games: Game[];
-  public actionGames: Game[];
-  public lifeGames: Game[];
-  public horrorGames: Game[];
-  public strategyGames: Game[];
-  public newGame: Game;
-  public delGame: Game;
-  public currentUser: User;
+  user: User;
+  email: string;
+  funds: any;
+  password : string;
+  username: string;
+  errorMessage = 'Invalid Credentials';
   searchKey: any;
+  successMessage: string;
+  invalidLogin = false;
+  loginSuccess = false;
   closeResult: string;
-  searchStarted: boolean;
-  username:string;
-  password:string;
+  isLoggedIn = false;
   
 
   constructor(private gameService: GamesService, private userService: UsersService,
-     private regService: RegistrationService, private modalService: NgbModal,
-     private el: ElementRef, private router: Router){}
-  
+     private regService: RegistrationService, private http: HttpClient, 
+     private modalService: NgbModal, private router: Router, private route: ActivatedRoute){   
+     }
     ngOnInit(){
+      this.isLoggedIn = this.regService.isUserLoggedIn();
+      this.funds = this.regService.setFunds();
+      this.username = this.regService.getLoggedInName();
+      this.email = this.regService.getLoggedInEmail();
+
+
+
+    }
+  
+
+
+  
+
+
+  // openAddgame(content: any) {
+  //   this.modalService.open(content, {ariaLabelledBy: 'addgameModal'}).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.closeModal(content)}`;
+  //   });
+  // }
+
+  // openEditgame(content: any, game: Game) {
+  //   this.newGame = game;
+  //   this.modalService.open(content, {ariaLabelledBy: 'updategameModal'}).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.closeModal(content)}`;
+  //   });
+  // }
+
+  onLoginUser(){
+    this.regService.authentication(this.email, this.password).pipe(mergeMap(
+      params => this.regService.getUser(this.email))).subscribe(
+        (result: User) => {
+          this.user = result;
+        this.regService.saveUserData(this.user?.email, this.user?.name, this.user?.cash, this.user?.userRole, this.user?.password);
+        this.invalidLogin = false;
+        this.loginSuccess = true;
+        this.successMessage = 'Login Successful.';
+        this.isLoggedIn = true;
+        this.router.navigate(['/']);
+        window.location.reload();
+    }, () => {
+      this.invalidLogin = true;
+      this.loginSuccess = false;
+
+    });      
+  }
+  
+
+  logoutUser() {
+    this.regService.logout();
+    this.router.navigate(['/']);
+    window. location. reload();
   }
 
-  openAddgame(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'addgameModal'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.closeModal(content)}`;
-    });
+  getAuthenticatedUser(email: string){
+    this.regService.getUser(email).subscribe(
+      (response) => {
+        this.user = response;
+        this.regService.saveUserData(this.user?.email, this.user?.name, this.user?.cash, this.user?.userRole, this.user?.password);
+      }, () => {
+      });       
   }
-
-  openEditgame(content: any, game: Game) {
-    this.newGame = game;
-    this.modalService.open(content, {ariaLabelledBy: 'updategameModal'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.closeModal(content)}`;
-    });
-  }
-
-  onLoginUser(loginForm: NgForm){
-    this.regService.login(loginForm.value).subscribe(
-      (response: User) => {
-        console.log("response success");
-                //this.currentUser = response;
-      },
-      (error: HttpErrorResponse) => {
-      alert(error.message);
-      }
-    );
-   }
 
   openLoginUser(content: any){
     this.modalService.open(content, {ariaLabelledBy: 'loginUser'}).result.then((result) => {

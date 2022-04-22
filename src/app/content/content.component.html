@@ -21,7 +21,7 @@
                     <p class = "game_text"><b>Year: {{" " + game?.year}}</b></p>
                     <p class = "game_text"><b>Rating: {{" " + game?.rating}}</b></p>
                     <p class = "game_text"><b>Price: {{" $" + game?.price}}</b></p>
-                    <button class = "game_buy"><b>Buy Now</b></button>
+                    <button class = "game_buy" (click)="openBuyGame(buyGame, game.id)"><b>Buy Now</b></button>
                 </ul>
               </div>
             </div>    
@@ -30,4 +30,26 @@
     </div>
 </div>
 <div class = "container"></div>
+
+<ng-template #buyGame let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Purchase Confirmation</h4>
+  </div>
+  <div class="modal-body">
+    <form #buyForm="ngForm" (ngSubmit)="buyGames(gameID)">
+      <div class="form-group">
+        <label for="warning">Would you like to purchase this item?</label>
+      </div>
+     <div class="modal-footer">
+      <button [disabled]="buyForm.invalid" type="submit" class="btn btn-primary">Yes</button>
+      <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" (click)=" modal.dismiss(buyGame)">No</button>
+     </div>
+     </form>
+     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+    </button>
+  </div>
+</ng-template>
+
  
